@@ -23,7 +23,7 @@ const Result = () => {
           </div>
 
           {/*---- Right Side ----*/}
-          <div className="flex flex-col">
+          <div className="flex flex-col sm:grid grid-cols-2 gap-8">
             <p className="font-semibold text-gray-600 mb-2">
               Background Removed
             </p>
