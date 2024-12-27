@@ -8,7 +8,7 @@ const authUser = async (req,res,next) => {
         const { token } = req.headers
 
         if (!token) {
-            return res.json({success:false,message:'Not Authoprized Login Again'})
+            return res.json({success:false,message:'Not Authorized Login Again'})
         }
 
         const token_decode = jwt.decode(token)
