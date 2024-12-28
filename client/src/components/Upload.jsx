@@ -2,9 +2,24 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
+import { useClerk, useUser } from "@clerk/clerk-react"; // Import Clerk hooks
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 const Upload = () => {
   const { removeBg } = useContext(AppContext);
+  const { isSignedIn } = useUser(); // Check if user is signed in
+  const { openSignIn } = useClerk(); // To open the sign-in modal
+  const navigate = useNavigate(); // To navigate programmatically
+
+  const handleUpload = (file) => {
+    if (!isSignedIn) {
+      // If not signed in, open the sign-in modal
+      openSignIn();
+    } else {
+      // If signed in, proceed with removing background
+      removeBg(file);
+    }
+  };
 
   return (
     <div className="pb-16">
@@ -15,7 +30,7 @@ const Upload = () => {
       {/* Upload */}
       <div className="text-center mb-24">
         <input
-          onChange={(e) => removeBg(e.target.files[0])}
+          onChange={(e) => handleUpload(e.target.files[0])} // Use the handleUpload function
           type="file"
           accept="image/*"
           id="upload2"

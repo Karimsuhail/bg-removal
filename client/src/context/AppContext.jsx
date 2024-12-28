@@ -17,7 +17,7 @@ const AppContextProvider = (props) => {
 
   const { getToken } = useAuth();
   const { isSignedIn } = useUser();
-  const { openSignedIn } = useClerk();
+  const { openSignIn } = useClerk();
   const [resultImage, setResultImage] = useState(false);
 
   const loadCreditsData = async () => {
@@ -40,7 +40,7 @@ const AppContextProvider = (props) => {
   const removeBg = async (image) => {
     try {
       if (!isSignedIn) {
-        return openSignedIn();
+        return openSignIn();
       }
       setImage(image);
       setResultImage(false);

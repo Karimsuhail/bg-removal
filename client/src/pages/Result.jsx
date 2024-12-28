@@ -10,28 +10,34 @@ const Result = () => {
     <div className="mx-4 my-3 lg:mx-44 mt-14 min-h-[75vh]">
       <div className="bg-white rounded-lg px-8 py-6 drop-shadow-sm">
         {/*---- Image Container ---- */}
-
-        <div className="flex flex-col sm:grid grid-cols-2 gap-8">
+        <div className="flex flex-col sm:grid sm:grid-cols-2 gap-8">
           {/*---- Left Side ---*/}
-          <div>
+          <div className="flex flex-col">
             <p className="font-semibold text-gray-600 mb-2">Original</p>
             <img
               className="rounded-md border"
               src={image ? URL.createObjectURL(image) : ""}
-              alt=""
+              alt="Original"
             />
           </div>
 
           {/*---- Right Side ----*/}
-          <div className="flex flex-col sm:grid grid-cols-2 gap-8">
+          <div className="w-full sm:w-auto flex flex-col h-full">
             <p className="font-semibold text-gray-600 mb-2">
               Background Removed
             </p>
-            <div className="rounded-md border border-gray-300 h-full relative bg-layer overflow-hidden">
-              <img src={resultImage ? resultImage : ""} alt="" />
-              {!resultImage && image && (
-                <div className="absolute right-1/2 bottom-1/2 transform translate-x-1/2 translate-y-1/2">
-                  <div className="border-4 border-violet-600 rounded-full h-12 w-12 border-t-transparent animate-spin"></div>
+            <div className="relative rounded-md border border-gray-300 h-full overflow-hidden bg-layer flex-grow">
+              {resultImage ? (
+                <img
+                  className="w-full h-full object-cover"
+                  src={resultImage}
+                  alt="Background removed"
+                />
+              ) : (
+                <div className="w-full h-full flex justify-center items-center bg-transparent">
+                  {!resultImage && image && (
+                    <div className="border-4 border-violet-600 rounded-full h-12 w-12 border-t-transparent animate-spin"></div>
+                  )}
                 </div>
               )}
             </div>

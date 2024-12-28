@@ -3,9 +3,22 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
+import { useClerk, useUser } from "@clerk/clerk-react"; // Import Clerk hooks
 
 const Header = () => {
   const { removeBg } = useContext(AppContext);
+  const { isSignedIn } = useUser(); // Check if the user is signed in
+  const { openSignIn } = useClerk(); // Open the sign-in modal
+
+  const handleUpload = (file) => {
+    if (!isSignedIn) {
+      // If the user is not signed in, open the sign-in modal
+      openSignIn();
+    } else {
+      // If signed in, proceed with the removeBg function
+      removeBg(file);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between max-sm:flex-col-reverse gap-y-10 px-4 mt-10 lg:px-44 sm:mt-20">
@@ -20,13 +33,14 @@ const Header = () => {
           from <br className="max-md:hidden" /> images for free.
         </h1>
         <p className="my-6 text-[15px] text-gray-500">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. <br className="max-sm:hidden" /> Lorem Ipsum has been the
-          industry's standard dummy text ever.
+          Transform your images instantly with our tool.{" "}
+          <br className="max-sm:hidden" /> Achieve perfect background removal
+          every time.
         </p>
+
         <div>
           <input
-            onChange={(e) => removeBg(e.target.files[0])}
+            onChange={(e) => handleUpload(e.target.files[0])} // Call the handleUpload function
             type="file"
             accept="image/*"
             id="upload1"
